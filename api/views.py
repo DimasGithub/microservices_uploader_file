@@ -2,10 +2,11 @@ import os
 import time
 
 from uploaderfile.models.uploader import UploadFile
+from uploaderfile.utils.validator import check_required_fields
 from api.serializer.upload import UploadSerializer
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-# from django.utils.translation import ugettext_lazy as _
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
@@ -19,6 +20,12 @@ class UploadFileViews(viewsets.GenericViewSet):
 
     def upload(self, request):
         try:
+            required_fields=[{'field':'file','type':InMemoryUploadedFile}]
+            error_fields=check_required_fields(required_fields, request.data)
+            if len(error_fields) > 0:
+                response = {'status': 400}
+                response.update(**error_fields)
+                return Response(response, status=response.get('status'))
             file = request.FILES['file']
             fs = FileSystemStorage(location=os.path.join(settings.IMAGE_UPLOAD, '%s' % time.strftime('%Y/%m/%d/')))
             file_save = fs.save(file.name, file)

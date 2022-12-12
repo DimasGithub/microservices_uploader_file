@@ -1,4 +1,3 @@
-from django.utils.translation import ugettext_lazy as _
 
 def check_required_fields(required_fields, exist_fields):
     """
@@ -35,10 +34,10 @@ def check_required_fields(required_fields, exist_fields):
             error_fields_list = []
 
             if (field_name not in exist_fields) or (field_request is None) or (field_request == ''):
-                error_fields_list.append(_('This field is required.'))
+                error_fields_list.append('This field is required.')
             # jika float diijinkan juga client mengirimkan int
             elif not (isinstance(field_request, field_type) or (field_type is float and isinstance(field_request, int))):
-                error_fields_list.append(_('Incorrect type. Expected %(type1)s value, received %(type2)s.')
+                error_fields_list.append('Incorrect type. Expected %(type1)s value, received %(type2)s.'
                                          % {'type1': field_type.__name__, 'type2': type(field_request).__name__})
 
             if len(error_fields_list) > 0:

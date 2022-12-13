@@ -33,7 +33,7 @@ class UploadFileViews(viewsets.GenericViewSet):
             obj = UploadFile.objects.create(title=file.name, file_upload=file_save, file_path=file_url)
             obj.save()
             serializer = self.get_serializer(obj)
-            result = serializer.data.json('file_path')
+            result = serializer.data.get('file_path')
             response_data = {'action': True, 'message':'Success', 'results': result, 'status':status.HTTP_201_CREATED}
         except Exception as err:
             response_data = {'action': False, 'error':'process failed','status':status.HTTP_400_BAD_REQUEST}

@@ -27,7 +27,7 @@ class UploadFileViews(viewsets.GenericViewSet):
                 response.update(**error_fields)
                 return Response(response, status=response.get('status'))
             file = request.FILES['file']
-            fs = FileSystemStorage(location=os.path.join(settings.IMAGE_UPLOAD, '%s' % time.strftime('%Y/%m/%d/')))
+            fs = FileSystemStorage(base_url=os.path.join(settings.IMAGE_UPLOAD_URL, '%s' % time.strftime('%Y/%m/%d/')), location=os.path.join(settings.IMAGE_UPLOAD, '%s' % time.strftime('%Y/%m/%d/')))
             file_save = fs.save(file.name, file)
             file_url = fs.url(file_save)
             obj = UploadFile.objects.create(title=file.name, file_upload=file_save, file_path=file_url)

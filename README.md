@@ -1,2 +1,2 @@
-# microservices_uploader_file
+# microservices uploader file
 microservices to uploader file using django framework and database postgresql

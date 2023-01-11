@@ -19,7 +19,7 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, 'env/','.env'))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 
@@ -92,11 +92,14 @@ WSGI_APPLICATION = 'uploaderfile.wsgi.application'
 
 DATABASES = {
     'default': {
+
+        #'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USERNAME'),
         'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
+        'HOST': 'db',
         'PORT': env('DB_PORT'),
     }
 }

@@ -1,0 +1,76 @@
+# version: "3.9"
+# services:
+#   db:
+#     networks:
+#       - mynetwork
+#     container_name: database
+#     image: postgres
+#     ports:
+#       - "5431:5432"
+#     environment:
+#       - POSTGRES_PASSWORD=123456
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_DB=db_uploader
+#       - POSTGRES_HOST =localhost
+    
+#   web:
+#     container_name: web
+#     build : .
+#     ports:
+#       - "8001:8001"
+#     environment:
+#       - DEBUG=True
+#       - HOST=http://127.0.0.1:8001
+#       - SERVER=.appseed.us
+#       - ALLOWED_HOSTS="127.0.0.1"
+#       - DB_NAME=db_uploader
+#       - DB_HOST=localhost
+#       - DB_PORT=543
+#       - DB_USERNAME=postgres
+#       - DB_PASSWORD=123456
+#       - SECRET_KEY=Dimasu{SD12dinas*?2
+#     volumes:
+#       - /code
+#     depends_on:
+#       - db
+
+# networks:
+#   mynetwork:
+#     external: true
+
+version: "3.9"
+
+services:
+  db:
+    container_name: database
+    image: postgres
+    ports: 
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=db_uploader
+    restart: always
+    networks:
+      - uploaderfile_external-name
+
+  django:
+    container_name: django
+    build : .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_NAME=db_uploader
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=123456
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - db
+    networks:
+      - uploaderfile_external-name
+    restart: always
+networks:
+  uploaderfile_external-name:

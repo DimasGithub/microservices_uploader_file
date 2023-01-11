@@ -1,0 +1,12 @@
+Django==3.2.13
+djangorestframework==3.13.1
+djangorestframework-datatables==0.7.0
+requests==2.27.1
+Pillow==9.1.1
+psycopg2-binary==2.9.3
+
+django-crispy-forms==1.14.0
+django-environ==0.9.0
+django-ckeditor==6.2.0
+
+wheel
